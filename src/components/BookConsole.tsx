@@ -1,11 +1,22 @@
+import { use, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
+import { GetBooks } from '../service/books/GetBooks';
 
 export function BookConsole() {
 
-    const tHeads:string[] = [
-        "Book ID", 
-        "Name", 
-        "Author", 
+    //add useEffect to load data
+    useEffect(() => {
+        const loadData = async () => {
+            const bookDetails = await GetBooks()
+            console.log(bookDetails)
+        }
+        loadData();
+    }, [])
+
+    const tHeads: string[] = [
+        "Book ID",
+        "Name",
+        "Author",
         "Edition",
         "Publisher",
         "ISBN",
@@ -15,6 +26,7 @@ export function BookConsole() {
         "Last Updated Date",
         "Last Updated Time"
     ];
+
 
     return (
         <>
