@@ -61,7 +61,6 @@ export function BookConsole() {
     }
 
     const handleUpdate = (updatedBook: Book) => {
-        alert("Updated Book")
         console.log("Updated Book : ", updatedBook)
     }
 
