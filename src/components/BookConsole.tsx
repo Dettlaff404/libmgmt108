@@ -1,21 +1,22 @@
 import { use, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { GetBooks } from '../service/books/GetBooks';
 
 export function BookConsole() {
 
     interface Book {
-        bookId:string;
-        bookName:string;
-        author:string;
-        edition:string;
-        publisher:string;
-        isbn:string;
-        price:number;
-        totalQty:number;
-        availableQty:number;
-        lastUpdateDate:string;
-        lastUpdateTime:string;
+        bookId: string;
+        bookName: string;
+        author: string;
+        edition: string;
+        publisher: string;
+        isbn: string;
+        price: number;
+        totalQty: number;
+        availableQty: number;
+        lastUpdateDate: string;
+        lastUpdateTime: string;
     }
 
     const [bookData, setBookData] = useState<Book[]>([])
@@ -41,7 +42,8 @@ export function BookConsole() {
         "Total Qty",
         "Available Qty",
         "Last Updated Date",
-        "Last Updated Time"
+        "Last Updated Time",
+        "Action"
     ];
 
 
@@ -56,16 +58,19 @@ export function BookConsole() {
                     </tr>
                 </thead>
                 <tbody>
-                    {bookData.map((row) =>(
+                    {bookData.map((row) => (
                         <tr key={row.bookId}>
                             {Object.values(row).map((cell, index) => (
                                 <td key={index}>{cell}</td>
                             ))}
+                            <td>
+                                <div className='d-flex gap-2'>
+                                    <Button variant="outline-success">Edit</Button>
+                                    <Button variant="outline-danger">Delete</Button>
+                                </div>
+                            </td>
                         </tr>
                     ))}
-                    <tr>
-                        <td></td>
-                    </tr>
                 </tbody>
             </Table>
         </>
