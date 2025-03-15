@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table';
 import { GetBooks } from '../service/books/GetBooks';
 import EditBook from './EditBook';
 import { DeleteBook } from '../service/books/DeleteBook';
+import AddBook from './AddBook';
 
 export function BookConsole() {
 
@@ -24,6 +25,7 @@ export function BookConsole() {
     const [bookData, setBookData] = useState<Book[]>([])
     const [selectedRow, setSelectedRow] = useState<Book | null>(null)
     const [showEditBookForm, setShowEditBookForm] = useState(false) //handle show the book edit form
+    const [showAddBookForm, setShowAddBookForm] = useState(false) //handle show the book add form
 
     //add useEffect to load data
     useEffect(() => {
@@ -62,7 +64,7 @@ export function BookConsole() {
     }
 
     const handleUpdate = (updatedBook: Book) => {
-        const updatedBooks = bookData.map((book) => 
+        const updatedBooks = bookData.map((book) =>
             book.bookId === updatedBook.bookId ? updatedBook : book
         );
         setBookData(updatedBooks);
@@ -74,13 +76,20 @@ export function BookConsole() {
             await DeleteBook(bookId);
             setBookData(bookData.filter((book) => book.bookId !== bookId));
         } catch (error) {
-            console.error("Failed to delete book", error)   
+            console.error("Failed to delete book", error)
         }
+    }
+
+    const handleAdd = (newBook: Book) => {
+        setBookData((prevData) => [...prevData, newBook]);
     }
 
 
     return (
         <>
+            <div className='d-flex justify-content-end p-3'>
+                <Button variant="outline-primary" onClick={() => setShowAddBookForm(true)}>Add</Button>
+            </div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -110,6 +119,11 @@ export function BookConsole() {
                 selectedRow={selectedRow}
                 handleClose={handleClose}
                 handleUpdate={handleUpdate}
+            />
+            <AddBook
+                show={showAddBookForm}
+                handleClose={() => setShowAddBookForm(false)}
+                handleAdd={handleAdd}
             />
         </>
     );
