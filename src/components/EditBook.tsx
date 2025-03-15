@@ -1,5 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
+import { useEffect, useState } from 'react';
 
 interface BookEditProps {
     show: boolean;
@@ -23,21 +26,158 @@ interface Book {
 }
 
 function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProps) {
+
+    //state management
+    const [book, setBook] = useState<Book>({
+        bookId: "",
+        bookName: "",
+        author: "",
+        edition: "",
+        publisher: "",
+        isbn: "",
+        price: 0,
+        totalQty: 0,
+        availableQty: 0,
+        lastUpdateDate: "",
+        lastUpdateTime: "",
+    });
+
+    //need load data when component mounted
+    useEffect(() => {
+        if (selectedRow) {
+            setBook({...selectedRow});
+        }
+    }, [selectedRow]);
+
+    //add book data from the form
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setBook({...book, [e.target.name]: e.target.value });
+    }
+
+    //handle the save/update data
+    const handleSave = () => {
+        alert("Saved");
+    }
+
     return (
         <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Modal.Header closeButton>
+                <Modal.Title>Edit Book</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {/* Form */}
+                <Form>
+                    <FloatingLabel controlId="floatingInput" label="Book ID" className="mb-3">
+                        <Form.Control
+                            readOnly
+                            type="text"
+                            name='bookId' 
+                            value={book.bookId}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Book Name" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='bookName' 
+                            value={book.bookName}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Author" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='author' 
+                            value={book.author}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Edition" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='edition' 
+                            value={book.edition}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Publisher" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='publisher' 
+                            value={book.publisher}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="ISBN" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='isbn' 
+                            value={book.isbn}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Price" className="mb-3">
+                        <Form.Control
+                            type="number"
+                            name='price' 
+                            value={book.price}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Total Quantity" className="mb-3">
+                        <Form.Control
+                            type="number"
+                            name='totalQty' 
+                            value={book.totalQty}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Available Quantity" className="mb-3">
+                        <Form.Control
+                            type="number"
+                            name='availableQty' 
+                            value={book.availableQty}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Last Updated Date" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='lastUpdateDate' 
+                            value={book.lastUpdateDate}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingInput" label="Last Updated Time" className="mb-3">
+                        <Form.Control
+                            type="text"
+                            name='lastUpdateTime' 
+                            value={book.lastUpdateTime}
+                            onChange={handleOnChange}
+                            />
+                    </FloatingLabel>
+
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleSave}>
+                    Save Changes
+                </Button>
+            </Modal.Footer>
+        </Modal>
     );
 }
 
