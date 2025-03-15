@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { GetBooks } from '../service/books/GetBooks';
@@ -20,6 +20,7 @@ export function BookConsole() {
     }
 
     const [bookData, setBookData] = useState<Book[]>([])
+    const [selectedRow, setSelectedRow] = useState<Book | null>(null);
 
     //add useEffect to load data
     useEffect(() => {
@@ -46,6 +47,12 @@ export function BookConsole() {
         "Action"
     ];
 
+    //handle edit function
+    const handleEdit = (row: Book) => {
+        console.log("handle edit : ", row)
+        setSelectedRow(row);
+    }
+
 
     return (
         <>
@@ -65,7 +72,7 @@ export function BookConsole() {
                             ))}
                             <td>
                                 <div className='d-flex gap-2'>
-                                    <Button variant="outline-success">Edit</Button>
+                                    <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
                                     <Button variant="outline-danger">Delete</Button>
                                 </div>
                             </td>
