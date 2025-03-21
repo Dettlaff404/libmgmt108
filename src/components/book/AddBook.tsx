@@ -68,7 +68,6 @@ function AddBook({ show, handleClose, handleAdd, addBook }: any) {
             <Modal.Body>
                 {/* Form */}
                 <Form>
-
                     {createFormElement("Title", "bookName", "text")}
                     {createFormElement("Author", "author", "text")}
                     {createFormElement("Edition", "edition", "text")}
@@ -77,7 +76,6 @@ function AddBook({ show, handleClose, handleAdd, addBook }: any) {
                     {createFormElement("Price", "price", "number")}
                     {createFormElement("Total Qty", "totalQty", "number")}
                     {createFormElement("Avl Qty", "availableQty", "number")}
-
                 </Form>
             </Modal.Body>
             <Modal.Footer>
