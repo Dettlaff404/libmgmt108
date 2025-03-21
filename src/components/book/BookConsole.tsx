@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import EditBook from './EditBook';
 import AddBook from './AddBook';
-import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../service/books/BookData';
+import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../../service/books/BookData';
 
 export function BookConsole() {
 
@@ -66,7 +66,7 @@ export function BookConsole() {
         const updatedBooks = bookData.map((book) =>
             book.bookId === updatedBook.bookId ? updatedBook : book
         );
-        setBookData([...updatedBooks]);
+        setBookData(updatedBooks);
     };
 
     //handle delete function
@@ -118,6 +118,7 @@ export function BookConsole() {
                 selectedRow={selectedRow}
                 handleClose={handleClose}
                 handleUpdate={handleUpdate}
+                updateBooks={UpdateBook}
             />
             <AddBook
                 show={showAddBookForm}

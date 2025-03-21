@@ -3,13 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from 'react';
-import { UpdateBook } from '../service/books/BookData';
 
 interface BookEditProps {
     show: boolean;
     selectedRow: Book | null;
     handleClose: () => void;
     handleUpdate: (updatedBook: Book) => void
+    updateBooks: (book : Book) => Promise<void>
 }
 
 interface Book {
@@ -26,7 +26,7 @@ interface Book {
     lastUpdateTime: string;
 }
 
-function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProps) {
+function EditBook({ show, selectedRow, handleClose, handleUpdate, updateBooks }: BookEditProps) {
 
     //state management
     const [book, setBook] = useState<Book>({
@@ -58,8 +58,8 @@ function EditBook({ show, selectedRow, handleClose, handleUpdate }: BookEditProp
     //handle the save/update data
     const handleSave = async () => {
         try {
-            const updatedBook = await UpdateBook(book);
-            handleUpdate(updatedBook);
+            await updateBooks(book);
+            handleUpdate(book);
             handleClose();
         } catch (error) {
             console.error("Failed to update book", error)
