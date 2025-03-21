@@ -4,13 +4,6 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 
-// interface BookEditProps {
-//     show: boolean;
-//     selectedRow: Book | null;
-//     handleClose: () => void;
-//     handleUpdate: (updatedBook: Book) => void
-// }
-
 interface Book {
     bookId: string;
     bookName: string;
@@ -21,11 +14,9 @@ interface Book {
     price: number;
     totalQty: number;
     availableQty: number;
-    lastUpdateDate: string;
-    lastUpdateTime: string;
 }
 
-function AddBook({ show, selectedRow, handleClose, handleAdd, addBook }: any) {
+function AddBook({ show, handleClose, handleAdd, addBook }: any) {
 
     //state management
     const [newBook, setNewBook] = useState<Book>({
@@ -37,9 +28,7 @@ function AddBook({ show, selectedRow, handleClose, handleAdd, addBook }: any) {
         isbn: "",
         price: 0,
         totalQty: 0,
-        availableQty: 0,
-        lastUpdateDate: "",
-        lastUpdateTime: "",
+        availableQty: 0
     });
 
 
@@ -49,97 +38,45 @@ function AddBook({ show, selectedRow, handleClose, handleAdd, addBook }: any) {
         setNewBook((prev) => ({ ...prev, [name]: value }))
     }
 
-    //handle the add book data
+    //handle the add book process with the back-end
     const handleOnSubmit = async () => {
         try {
-            const newBookDataDetails = await addBook(newBook);
-            handleAdd(newBookDataDetails);
-            handleClose();
-        } catch (error) {
-            console.error("Failed to update book", error)
+            const newBookDetails = await addBook(newBook);
+            handleAdd(newBookDetails)
+            handleClose()
+        } catch (err) {
+            console.error("Failed to update the book", err)
         }
     }
+
+    const createFormElement = (label: string, name: keyof Book, type = "text") => (
+        <FloatingLabel controlId="floatingInput" label={label} className="mb-3">
+            <Form.Control
+                type={type}
+                name={name}
+                value={newBook[name]}
+                onChange={handleOnChange}
+            />
+        </FloatingLabel>
+    );
 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit Book</Modal.Title>
+                <Modal.Title>Add Book</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {/* Form */}
                 <Form>
 
-                    <FloatingLabel controlId="floatingInput" label="Book Name" className="mb-3">
-                        <Form.Control
-                            type="text"
-                            name='bookName'
-                            value={newBook.bookName}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="Author" className="mb-3">
-                        <Form.Control
-                            type="text"
-                            name='author'
-                            value={newBook.author}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="Edition" className="mb-3">
-                        <Form.Control
-                            type="text"
-                            name='edition'
-                            value={newBook.edition}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="Publisher" className="mb-3">
-                        <Form.Control
-                            type="text"
-                            name='publisher'
-                            value={newBook.publisher}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="ISBN" className="mb-3">
-                        <Form.Control
-                            type="text"
-                            name='isbn'
-                            value={newBook.isbn}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="Price" className="mb-3">
-                        <Form.Control
-                            type="number"
-                            name='price'
-                            value={newBook.price}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="Total Quantity" className="mb-3">
-                        <Form.Control
-                            type="number"
-                            name='totalQty'
-                            value={newBook.totalQty}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="floatingInput" label="Available Quantity" className="mb-3">
-                        <Form.Control
-                            type="number"
-                            name='availableQty'
-                            value={newBook.availableQty}
-                            onChange={handleOnChange}
-                        />
-                    </FloatingLabel>
+                    {createFormElement("Title", "bookName", "text")}
+                    {createFormElement("Author", "author", "text")}
+                    {createFormElement("Edition", "edition", "text")}
+                    {createFormElement("Publisher", "publisher", "text")}
+                    {createFormElement("ISBN", "isbn", "text")}
+                    {createFormElement("Price", "price", "number")}
+                    {createFormElement("Total Qty", "totalQty", "number")}
+                    {createFormElement("Avl Qty", "availableQty", "number")}
 
                 </Form>
             </Modal.Body>
