@@ -123,6 +123,7 @@ export function BookConsole() {
                 show={showAddBookForm}
                 handleClose={() => setShowAddBookForm(false)}
                 handleAdd={handleAdd}
+                addBook={AddBookData}
             />
         </>
     );

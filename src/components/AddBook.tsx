@@ -3,7 +3,6 @@ import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { AddBookData } from '../service/books/AddBookData';
 
 // interface BookEditProps {
 //     show: boolean;
@@ -26,7 +25,7 @@ interface Book {
     lastUpdateTime: string;
 }
 
-function AddBook({ show, selectedRow, handleClose, handleAdd }: any) {
+function AddBook({ show, selectedRow, handleClose, handleAdd, addBook }: any) {
 
     //state management
     const [newBook, setNewBook] = useState<Book>({
@@ -53,7 +52,7 @@ function AddBook({ show, selectedRow, handleClose, handleAdd }: any) {
     //handle the add book data
     const handleOnSubmit = async () => {
         try {
-            const newBookDataDetails = await AddBookData(newBook);
+            const newBookDataDetails = await addBook(newBook);
             handleAdd(newBookDataDetails);
             handleClose();
         } catch (error) {

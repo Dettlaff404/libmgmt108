@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from 'react';
-import { UpdateBook } from '../service/books/UpdateBook';
+import { UpdateBook } from '../service/books/BookData';
 
 interface BookEditProps {
     show: boolean;
