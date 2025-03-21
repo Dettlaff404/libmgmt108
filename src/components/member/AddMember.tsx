@@ -8,6 +8,7 @@ interface Member {
     memberId: string;
     name: string;
     email: string;
+    membershipDate: string;
 }
 
 function AddMember({ show, handleClose, handleAdd, addMember }: any) {
@@ -16,7 +17,8 @@ function AddMember({ show, handleClose, handleAdd, addMember }: any) {
     const [newMember, setNewMember] = useState<Member>({
         memberId: "",
         name: "",
-        email: ""
+        email: "",
+        membershipDate: ""
     });
 
 
@@ -58,6 +60,7 @@ function AddMember({ show, handleClose, handleAdd, addMember }: any) {
                 <Form>
                     {createFormElement("Name", "name", "text")}
                     {createFormElement("Email", "email", "text")}
+                    {createFormElement("Membership Date", "membershipDate", "date")}
                 </Form>
             </Modal.Body>
             <Modal.Footer>

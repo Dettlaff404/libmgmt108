@@ -110,7 +110,7 @@ export function MemberConsole() {
                 show={showAddMemberForm}
                 handleClose={() => setShowAddMemberForm(false)}
                 handleAdd={handleAdd}
-                addBook={AddMemberData}
+                addMember={AddMemberData}
             />
         </>
     );
