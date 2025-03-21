@@ -4,71 +4,61 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from 'react';
 
-interface BookEditProps {
+interface MemberEditProps {
     show: boolean;
-    selectedRow: Book | null;
+    selectedRow: Member | null;
     handleClose: () => void;
-    handleUpdate: (updatedBook: Book) => void
-    updateBooks: (book: Book) => Promise<void>
+    handleUpdate: (updatedMember: Member) => void
+    updateMembers: (member: Member) => Promise<void>
 }
 
-interface Book {
-    bookId: string;
-    bookName: string;
-    author: string;
-    edition: string;
-    publisher: string;
-    isbn: string;
-    price: number;
-    totalQty: number;
-    availableQty: number;
+interface Member {
+    memberId: string;
+    name: string;
+    email: string;
+    membershipDate: string;
 }
 
-function EditMember({ show, selectedRow, handleClose, handleUpdate, updateBooks }: BookEditProps) {
+function EditMember({ show, selectedRow, handleClose, handleUpdate, updateMembers }: MemberEditProps) {
 
     //state management
-    const [book, setBook] = useState<Book>({
-        bookId: "",
-        bookName: "",
-        author: "",
-        edition: "",
-        publisher: "",
-        isbn: "",
-        price: 0,
-        totalQty: 0,
-        availableQty: 0
+    const [member, setMember] = useState<Member>({
+        memberId: "",
+        name: "",
+        email: "",
+        membershipDate: ""
     });
 
     //need load data when component mounted
     useEffect(() => {
         if (selectedRow) {
-            setBook({ ...selectedRow });
+            setMember({ ...selectedRow });
         }
     }, [selectedRow]);
 
     //add book data from the form
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setBook({ ...book, [e.target.name]: e.target.value });
+        setMember({ ...member, [e.target.name]: e.target.value });
     }
 
     //handle the save/update data
     const handleSave = async () => {
         try {
-            await updateBooks(book);
-            handleUpdate(book);
+            await updateMembers(member);
+            handleUpdate(member);
             handleClose();
         } catch (error) {
-            console.error("Failed to update book", error)
+            console.error("Failed to update member", error)
         }
     }
 
     //handle repeat of floating label
-    const renderFloatingLabel = (label: string, name: keyof Book, type = "text", readOnly = false) => (
+    const renderFloatingLabel = (label: string, name: keyof Member, type = "text", readOnly = false) => (
         <FloatingLabel controlId="floatingInput" label={label} className="mb-3">
             <Form.Control
                 type={type}
                 name={name}
-                value={book[name]}
+                value={member[name]}
                 onChange={handleOnChange}
                 readOnly={readOnly}
             />
@@ -78,20 +68,15 @@ function EditMember({ show, selectedRow, handleClose, handleUpdate, updateBooks 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit Book</Modal.Title>
+                <Modal.Title>Edit Member</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {/* Form */}
                 <Form>
-                    {renderFloatingLabel("Book Id", "bookId", "text", true)}
-                    {renderFloatingLabel("Book Name", "bookName")}
-                    {renderFloatingLabel("Author", "author")}
-                    {renderFloatingLabel("Edition", "edition")}
-                    {renderFloatingLabel("Publisher", "publisher")}
-                    {renderFloatingLabel("ISBN", "isbn")}
-                    {renderFloatingLabel("Price", "price")}
-                    {renderFloatingLabel("Total Quantity", "totalQty", "number")}
-                    {renderFloatingLabel("Available Quantity", "availableQty", "number")}
+                    {renderFloatingLabel("Member Id", "memberId", "text", true)}
+                    {renderFloatingLabel("Name", "name")}
+                    {renderFloatingLabel("Email", "email")}
+                    {renderFloatingLabel("Membership Date", "membershipDate")}
                 </Form>
             </Modal.Body>
             <Modal.Footer>

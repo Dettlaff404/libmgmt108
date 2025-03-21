@@ -1,91 +1,79 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import EditBook from './EditMember';
-import AddBook from './AddMember';
-import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../../service/BookData';
+import EditMember from './EditMember';
+import AddMember from './AddMember';
+import { AddMemberData, DeleteMember, GetMembers, UpdateMember } from '../../service/MemberData';
 
 export function MemberConsole() {
 
-    interface Book {
-        bookId: string;
-        bookName: string;
-        author: string;
-        edition: string;
-        publisher: string;
-        isbn: string;
-        price: number;
-        totalQty: number;
-        availableQty: number;
+    interface Member {
+        memberId: string;
+        name: string;
+        email: string;
+        membershipDate: string;
     }
 
-    const [bookData, setBookData] = useState<Book[]>([])
-    const [selectedRow, setSelectedRow] = useState<Book | null>(null)
-    const [showEditBookForm, setShowEditBookForm] = useState(false) //handle show the book edit form
-    const [showAddBookForm, setShowAddBookForm] = useState(false) //handle show the book add form
+    const [memberData, setMemberData] = useState<Member[]>([])
+    const [selectedRow, setSelectedRow] = useState<Member | null>(null)
+    const [showEditMemberForm, setShowEditMemberForm] = useState(false) //handle show the member edit form
+    const [showAddMemberForm, setShowAddMemberForm] = useState(false) //handle show the member add form
 
     //add useEffect to load data
     useEffect(() => {
         const loadData = async () => {
-            const bookDetails = await GetBooks()
-            console.log(bookDetails)
-            setBookData(bookDetails)
+            const memberDetails = await GetMembers()
+            console.log(memberDetails)
+            setMemberData(memberDetails)
         }
         loadData();
     }, [])
 
     const tHeads: string[] = [
-        "Book ID",
+        "Member ID",
         "Name",
-        "Author",
-        "Edition",
-        "Publisher",
-        "ISBN",
-        "Price",
-        "Total Qty",
-        "Available Qty",
-        "Last Updated Date",
-        "Last Updated Time",
+        "Email",
+        "Membership Date",
         "Action"
     ];
 
     //handle edit function
-    const handleEdit = (row: Book) => {
+    const handleEdit = (row: Member) => {
         console.log("handle edit : ", row)
         setSelectedRow(row);
-        setShowEditBookForm(true);
+        setShowEditMemberForm(true);
     }
 
     const handleClose = () => {
-        setShowEditBookForm(false);
+        setShowEditMemberForm(false);
     }
 
-    const handleUpdate = (updatedBook: Book) => {
-        const updatedBooks = bookData.map((book) =>
-            book.bookId === updatedBook.bookId ? updatedBook : book
+    const handleUpdate = (updatedMember: Member) => {
+        const updatedMembers = memberData.map((member) =>
+            member.memberId === updatedMember.memberId ? updatedMember : member
         );
-        setBookData(updatedBooks);
+        setMemberData(updatedMembers);
     };
 
     //handle delete function
-    const handleDelete = async (bookId: string) => {
+    const handleDelete = async (memberId: string) => {
         try {
-            await DeleteBook(bookId);
-            setBookData(bookData.filter((book) => book.bookId !== bookId));
+            await DeleteMember(memberId);
+            setMemberData(memberData.filter((member) => member.memberId !== memberId));
         } catch (error) {
-            console.error("Failed to delete book", error)
+            console.error("Failed to delete member", error)
         }
     }
 
-    const handleAdd = (newBook: Book) => {
-        setBookData((prevData) => [...prevData, newBook]);
+    const handleAdd = (newMember: Member) => {
+        setMemberData((prevData) => [...prevData, newMember]);
     }
 
 
     return (
         <>
             <div className='d-flex justify-content-end p-3'>
-                <Button variant="outline-primary" onClick={() => setShowAddBookForm(true)}>Add</Button>
+                <Button variant="outline-primary" onClick={() => setShowAddMemberForm(true)}>Add</Button>
             </div>
             <Table striped bordered hover>
                 <thead>
@@ -96,33 +84,33 @@ export function MemberConsole() {
                     </tr>
                 </thead>
                 <tbody>
-                    {bookData.map((row) => (
-                        <tr key={row.bookId}>
+                    {memberData.map((row) => (
+                        <tr key={row.memberId}>
                             {Object.values(row).map((cell, index) => (
                                 <td key={index}>{cell}</td>
                             ))}
                             <td>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
-                                    <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>Delete</Button>
+                                    <Button variant="outline-danger" onClick={() => handleDelete(row.memberId)}>Delete</Button>
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            <EditBook
-                show={showEditBookForm}
+            <EditMember
+                show={showEditMemberForm}
                 selectedRow={selectedRow}
                 handleClose={handleClose}
                 handleUpdate={handleUpdate}
-                updateBooks={UpdateBook}
+                updateMembers={UpdateMember}
             />
-            <AddBook
-                show={showAddBookForm}
-                handleClose={() => setShowAddBookForm(false)}
+            <AddMember
+                show={showAddMemberForm}
+                handleClose={() => setShowAddMemberForm(false)}
                 handleAdd={handleAdd}
-                addBook={AddBookData}
+                addBook={AddMemberData}
             />
         </>
     );
