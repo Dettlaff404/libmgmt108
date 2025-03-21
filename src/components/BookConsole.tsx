@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import { GetBooks } from '../service/books/GetBooks';
 import EditBook from './EditBook';
-import { DeleteBook } from '../service/books/DeleteBook';
 import AddBook from './AddBook';
+import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../service/books/BookData';
 
 export function BookConsole() {
 
@@ -67,8 +66,8 @@ export function BookConsole() {
         const updatedBooks = bookData.map((book) =>
             book.bookId === updatedBook.bookId ? updatedBook : book
         );
-        setBookData(updatedBooks);
-    }
+        setBookData([...updatedBooks]);
+    };
 
     //handle delete function
     const handleDelete = async (bookId: string) => {
