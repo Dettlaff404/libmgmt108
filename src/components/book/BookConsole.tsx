@@ -84,7 +84,7 @@ export function BookConsole() {
 
     const location = useLocation();
     const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
-    const formatedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + " Console";
+    const formatedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1) + " Console";
 
     return (
         <>
