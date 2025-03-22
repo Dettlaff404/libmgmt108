@@ -5,6 +5,7 @@ import EditStaff from './EditStaff';
 import AddStaff from './AddStaff';
 import { AddStaffData, DeleteStaff, GetStaffs, UpdateStaff } from '../../service/StaffData';
 import { useLocation } from 'react-router';
+import styles from './staffstyle.module.css'
 
 export function StaffConsole() {
 
@@ -89,22 +90,22 @@ export function StaffConsole() {
             <div className='d-flex justify-content-end p-3'>
                 <Button variant="outline-primary" onClick={() => setShowAddStaffForm(true)}>Add</Button>
             </div>
-            <h1>{formatedTitle}</h1>
+            <p className={styles.staffTitle}>{formatedTitle}</p>
             <Table striped bordered hover>
-                <thead>
+                <thead className='text-center'>
                     <tr>
                         {tHeads.map((headings) => (
                             <th>{headings}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='text-center'>
                     {staffData.map((row) => (
                         <tr key={row.staffId}>
                             {Object.values(row).map((cell, index) => (
                                 <td key={index}>{cell}</td>
                             ))}
-                            <td>
+                            <td className='d-flex justify-content-center'>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
                                     <Button variant="outline-danger" onClick={() => handleDelete(row.staffId)}>Delete</Button>

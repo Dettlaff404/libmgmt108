@@ -5,6 +5,7 @@ import HandOverLending from './HandOverLending';
 import AddLending from './AddLending';
 import { AddLendingData, DeleteLending, GetLendings, UpdateLending } from '../../service/LendingData';
 import { useLocation } from 'react-router';
+import styles from './lendingstyle.module.css'
 
 export function LendingConsole() {
 
@@ -42,7 +43,8 @@ export function LendingConsole() {
         "Return Date",
         "Lending Status",
         "Over Due Days",
-        "Fine Amount"
+        "Fine Amount",
+        "Action"
     ];
 
     //handle edit function
@@ -92,22 +94,22 @@ export function LendingConsole() {
             <div className='d-flex justify-content-end p-3'>
                 <Button variant="outline-primary" onClick={() => setShowAddLendingForm(true)}>Add</Button>
             </div>
-            <h1>{formatedTitle}</h1>
+            <p className={styles.lendingTitle}>{formatedTitle}</p>
             <Table striped bordered hover>
-                <thead>
+                <thead className='text-center'>
                     <tr>
                         {tHeads.map((headings) => (
                             <th>{headings}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='text-center'>
                     {lendingData.map((row) => (
                         <tr key={row.lendingId}>
                             {Object.values(row).map((cell, index) => (
                                 <td key={index}>{cell}</td>
                             ))}
-                            <td>
+                            <td className='d-flex justify-content-center'>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Hand Over</Button>
                                     <Button variant="outline-danger" onClick={() => handleDelete(row.lendingId)}>Delete</Button>

@@ -5,6 +5,7 @@ import EditBook from './EditBook';
 import AddBook from './AddBook';
 import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../../service/BookData';
 import { useLocation } from 'react-router';
+import styles from './bookstyle.module.css'
 
 export function BookConsole() {
 
@@ -91,16 +92,16 @@ export function BookConsole() {
             <div className='d-flex justify-content-end p-3'>
                 <Button variant="outline-primary" onClick={() => setShowAddBookForm(true)}>Add</Button>
             </div>
-            <h1>{formatedTitle}</h1>
+            <p className={styles.bookTitle}>{formatedTitle}</p>
             <Table striped bordered hover>
-                <thead>
+                <thead className='text-center'>
                     <tr>
                         {tHeads.map((headings) => (
                             <th>{headings}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='text-center'>
                     {bookData.map((row) => (
                         <tr key={row.bookId}>
                             {Object.values(row).map((cell, index) => (

@@ -5,6 +5,7 @@ import EditMember from './EditMember';
 import AddMember from './AddMember';
 import { AddMemberData, DeleteMember, GetMembers, UpdateMember } from '../../service/MemberData';
 import { useLocation } from 'react-router';
+import styles from './memberstyle.module.css'
 
 export function MemberConsole() {
 
@@ -79,23 +80,23 @@ export function MemberConsole() {
             <div className='d-flex justify-content-end p-3'>
                 <Button variant="outline-primary" onClick={() => setShowAddMemberForm(true)}>Add</Button>
             </div>
-            <h1>{formatedTitle}</h1>
+            <p className={styles.memberTitle}>{formatedTitle}</p>
             <Table striped bordered hover>
-                <thead>
+                <thead className='text-center'>
                     <tr>
                         {tHeads.map((headings) => (
                             <th>{headings}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='text-center'>
                     {memberData.map((row) => (
                         <tr key={row.memberId}>
                             {Object.values(row).map((cell, index) => (
                                 <td key={index}>{cell}</td>
                             ))}
-                            <td>
-                                <div className='d-flex gap-2'>
+                            <td className='d-flex justify-content-center'>
+                                <div className='d-flex gap-3'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
                                     <Button variant="outline-danger" onClick={() => handleDelete(row.memberId)}>Delete</Button>
                                 </div>
