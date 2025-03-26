@@ -1,41 +1,104 @@
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 export const SignUp = () => {
+
+    interface SignUp{
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string,
+        role: string
+    }
+
+    const [user, setUser] = useState<SignUp>(
+        {
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            role: ""
+        }
+    );
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    }
+
+    const handleOnSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        //API request
+        console.log(user)
+        setUser(
+            { 
+                firstName: "", 
+                lastName: "", 
+                email: "", 
+                password: "", 
+                role: "" 
+            }
+        )
+    }
+
     return (
         <>
             <h1>Sign Up</h1>
 
-            <Form className="d-flex flex-column align-items-center mt-5">
+            <Form className="d-flex flex-column align-items-center mt-5" onSubmit={handleOnSubmit}>
                 <div className='w-50'>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter First Name" />
+                        <Form.Control 
+                            type="text" 
+                            placeholder="Enter First Name" 
+                            name='firstName' 
+                            value={user.firstName}
+                            onChange={handleOnChange}
+                        />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Last Name" />
+                        <Form.Control 
+                            type="text" 
+                            placeholder="Enter Last Name" 
+                            name='lastName' 
+                            value={user.lastName}
+                            onChange={handleOnChange}
+                        />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control 
+                            type="email" 
+                            placeholder="Enter email" 
+                            name='email' 
+                            value={user.email}
+                            onChange={handleOnChange}
+                        />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter Password" />
+                        <Form.Control 
+                            type="password" 
+                            placeholder="Enter Password" 
+                            name='password' 
+                            value={user.password}
+                            onChange={handleOnChange}
+                        />
                     </Form.Group>
 
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Role</Form.Label>
-                        <Form.Select>
+                        <Form.Select name='role' value={user.role} onChange={handleOnChange}>
                             <option value="">Select a Role</option>
-                            <option value="admin">ADMIN</option>
-                            <option value="officer">OFFICER</option>
-                            <option value="librarian">LIBRARIAN</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="OFFICER">OFFICER</option>
+                            <option value="LIBRARIAN">LIBRARIAN</option>
                         </Form.Select>
                     </Form.Group>
 
