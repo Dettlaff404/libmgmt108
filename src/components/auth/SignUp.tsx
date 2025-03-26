@@ -31,7 +31,12 @@ export const SignUp = () => {
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Role</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Role" />
+                        <Form.Select>
+                            <option value="">Select a Role</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="OFFICER">User</option>
+                            <option value="LIBRARIAN">Moderator</option>
+                        </Form.Select>
                     </Form.Group>
 
                     <Button variant="success" type="submit">
