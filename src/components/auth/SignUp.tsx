@@ -33,9 +33,9 @@ export const SignUp = () => {
                         <Form.Label>Role</Form.Label>
                         <Form.Select>
                             <option value="">Select a Role</option>
-                            <option value="ADMIN">Admin</option>
-                            <option value="OFFICER">User</option>
-                            <option value="LIBRARIAN">Moderator</option>
+                            <option value="admin">ADMIN</option>
+                            <option value="officer">OFFICER</option>
+                            <option value="librarian">LIBRARIAN</option>
                         </Form.Select>
                     </Form.Group>
 
