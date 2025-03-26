@@ -107,7 +107,7 @@ export function BookConsole() {
                             {Object.values(row).map((cell, index) => (
                                 <td key={index}>{cell}</td>
                             ))}
-                            <td>
+                            <td className='d-flex justify-content-center'>
                                 <div className='d-flex gap-2'>
                                     <Button variant="outline-success" onClick={() => handleEdit(row)}>Edit</Button>
                                     <Button variant="outline-danger" onClick={() => handleDelete(row.bookId)}>Delete</Button>

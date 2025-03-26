@@ -9,6 +9,8 @@ function NavB() {
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Nav className="me-auto">
+            <Nav.Link as={NavLink} to="/signin">SignIn</Nav.Link>
+            <Nav.Link as={NavLink} to="/signup">SignUp</Nav.Link>
             <Nav.Link as={NavLink} to="/book">Book</Nav.Link>
             <Nav.Link as={NavLink} to="/lending">Lending</Nav.Link>
             <Nav.Link as={NavLink} to="/staff">Staff</Nav.Link>
