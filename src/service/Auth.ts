@@ -9,10 +9,25 @@ const SignUpTask = async (signUp: any) => {
             `${baseAuthURL}/signup`,
             signUp
         );
-        console.log(signUpResponse.data.token);
         return signUpResponse.data.token
     } catch (error) {
         console.error("Failed to sign up", error);
         throw error
     }
 }
+
+const SignInTask = async (signIn: any) => {
+    console.log(signIn)
+    try {
+        const signUpResponse = await axios.post(
+            `${baseAuthURL}/signin`,
+            signIn
+        );
+        return signUpResponse.data.token
+    } catch (error) {
+        console.error("Failed to sign in", error);
+        throw error
+    }
+}
+
+export { SignUpTask, SignInTask }
