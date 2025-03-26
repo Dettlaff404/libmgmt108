@@ -19,11 +19,11 @@ const SignUpTask = async (signUp: any) => {
 const SignInTask = async (signIn: any) => {
     console.log(signIn)
     try {
-        const signUpResponse = await axios.post(
+        const signInResponse = await axios.post(
             `${baseAuthURL}/signin`,
             signIn
         );
-        return signUpResponse.data.token
+        return signInResponse.data.token
     } catch (error) {
         console.error("Failed to sign in", error);
         throw error
