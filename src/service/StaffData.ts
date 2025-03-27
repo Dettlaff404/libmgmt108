@@ -2,12 +2,22 @@ import axios from "axios"
 
 const baseURL = "http://localhost:8085/booklib/api/v1/staff"
 
+const fetchToken = () => {
+    const token = localStorage.getItem("libToken")
+    return "Bearer " + token
+}
+
 const AddStaffData = async(staff: any) => {
     //add the staff member
     try {
         const response = await axios.post(
             baseURL,
-            staff
+            staff,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
         );
         console.log(response.data)
         return response.data
@@ -21,7 +31,12 @@ const DeleteStaff = async(staffId: string) => {
     //delete the staff member
     try {
         const response = await axios.delete(
-            `${baseURL}?staffId=${staffId}`
+            `${baseURL}?staffId=${staffId}`,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
         );
         return response.data
     } catch (error) {
@@ -33,7 +48,13 @@ const DeleteStaff = async(staffId: string) => {
 const GetStaffs = async() => {
     //get the books
     try {
-        const response = await axios.get(`${baseURL}/getallstaff`)
+        const response = await axios.get(`${baseURL}/getallstaff`,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
+        );
         return response.data
     } catch (error) {
         console.error("Failed to get staff members", error)
@@ -46,7 +67,12 @@ const UpdateStaff = async(staff: any) => {
     try {
         const response = await axios.patch(
             `${baseURL}?staffId=${staff.staffId}`,
-            staff
+            staff,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
         );
         return response.data
     } catch (error) {

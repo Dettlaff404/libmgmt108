@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { SignInTask } from '../../service/Auth';
 import styles from './Signformstyle.module.css'
+import { useAuth } from './AuthProvider';
 
 export const SignIn = () => {
 
@@ -10,6 +11,8 @@ export const SignIn = () => {
         email: string,
         password: string
     }
+
+    const { login } = useAuth();
 
     const [user, setUser] = useState<SignIn>(
         {
@@ -29,6 +32,7 @@ export const SignIn = () => {
         const token = await SignInTask(user);
 
         console.log(token)
+        login(token);
         setUser(
             {
                 email: "",
