@@ -29,7 +29,6 @@ function NavB() {
                 <Nav.Link as={NavLink} to="/lending">Lending</Nav.Link>
                 <Nav.Link as={NavLink} to="/staff">Staff</Nav.Link>
                 <Nav.Link as={NavLink} to="/member">Members</Nav.Link>
-                <Button variant="warning" onClick={handleOnClick}>Logout</Button>
               </>
             ) : (
               <>
@@ -37,9 +36,12 @@ function NavB() {
                 <Nav.Link as={NavLink} to="/signup">SignUp</Nav.Link>
               </>
             )}
-
-
           </Nav>
+          {isAuthenticated && (
+          <div className="ms-auto">
+            <Button variant="warning" onClick={handleOnClick}>Logout</Button>
+          </div>
+        )}
         </Container>
       </Navbar>
     </>
