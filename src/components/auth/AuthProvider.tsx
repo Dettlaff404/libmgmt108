@@ -15,6 +15,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         //get the token from local storag and validate
         const token = localStorage.getItem('libToken');
+        if (token) {
+            setIsAuthenticated(!!token);
+        }
     }, [])
 
     const login = (token: string) => {

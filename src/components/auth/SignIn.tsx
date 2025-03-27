@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { SignInTask } from '../../service/Auth';
+import styles from './Signformstyle.module.css'
 
 export const SignIn = () => {
 
@@ -29,8 +30,8 @@ export const SignIn = () => {
 
         console.log(token)
         setUser(
-            { 
-                email: "", 
+            {
+                email: "",
                 password: ""
             }
         )
@@ -38,15 +39,15 @@ export const SignIn = () => {
 
     return (
         <>
-            <h1>Sign In</h1>
+            <p className={styles.formTitle}>Sign In</p>
 
             <Form className="d-flex flex-column align-items-center mt-5" onSubmit={handleOnSubmit}>
-                <div className='w-50'>
+                <div className={styles.formCard}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control 
-                            type="email" 
-                            placeholder="Enter email" 
+                        <Form.Control
+                            type="email"
+                            placeholder="Enter email"
                             name="email"
                             value={user.email}
                             onChange={handleOnChange}
@@ -55,18 +56,19 @@ export const SignIn = () => {
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            placeholder="Enter Password" 
+                        <Form.Control
+                            type="password"
+                            placeholder="Enter Password"
                             name="password"
                             value={user.password}
                             onChange={handleOnChange}
                         />
                     </Form.Group>
-
-                    <Button variant="success" type="submit">
-                        LogIn
-                    </Button>
+                    <div className="d-flex justify-content-end">
+                        <Button variant="success w-50 mt-3 mb-2" type="submit">
+                            LogIn
+                        </Button>
+                    </div>
                 </div>
             </Form>
         </>

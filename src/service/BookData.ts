@@ -2,12 +2,22 @@ import axios from "axios"
 
 const baseURL = "http://localhost:8085/booklib/api/v1/books"
 
+
+const fetchToken = () => {
+    const token = localStorage.getItem("libToken")
+    return "Bearer " + token
+}
+
 const AddBookData = async(book: any) => {
     //update the book
     try {
         const response = await axios.post(
             baseURL,
-            book
+            book,{
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
         );
         console.log(response.data)
         return response.data
@@ -33,7 +43,13 @@ const DeleteBook = async(bookId: string) => {
 const GetBooks = async() => {
     //get the books
     try {
-        const response = await axios.get(`${baseURL}/getallbooks`)
+        const response = await axios.get(`${baseURL}/getallbooks`,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
+        );
         return response.data
     } catch (error) {
         console.error("Failed to get books", error)
