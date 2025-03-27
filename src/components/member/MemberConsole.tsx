@@ -6,6 +6,7 @@ import AddMember from './AddMember';
 import { AddMemberData, DeleteMember, GetMembers, UpdateMember } from '../../service/MemberData';
 import { useLocation } from 'react-router';
 import styles from './memberstyle.module.css'
+import { useNavigate } from 'react-router';
 
 export function MemberConsole() {
 
@@ -21,15 +22,21 @@ export function MemberConsole() {
     const [showEditMemberForm, setShowEditMemberForm] = useState(false) //handle show the member edit form
     const [showAddMemberForm, setShowAddMemberForm] = useState(false) //handle show the member add form
 
+    const navigate = useNavigate();
+
     //add useEffect to load data
     useEffect(() => {
         const loadData = async () => {
-            const memberDetails = await GetMembers()
-            console.log(memberDetails)
-            setMemberData(memberDetails)
+            try {
+                const memberDetails = await GetMembers()
+                setMemberData(memberDetails)
+            } catch (error) {
+                navigate('/unauth')
+                console.error("Failed to fetch members", error)
+            }
         }
         loadData();
-    }, [])
+    }, [navigate])
 
     const tHeads: string[] = [
         "Member ID",

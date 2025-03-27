@@ -6,6 +6,7 @@ import AddLending from './AddLending';
 import { AddLendingData, DeleteLending, GetLendings, UpdateLending } from '../../service/LendingData';
 import { useLocation } from 'react-router';
 import styles from './lendingstyle.module.css'
+import { useNavigate } from 'react-router';
 
 export function LendingConsole() {
 
@@ -25,15 +26,21 @@ export function LendingConsole() {
     const [showEditLendingForm, setShowEditLendingForm] = useState(false) //handle show the lending edit form
     const [showAddLendingForm, setShowAddLendingForm] = useState(false) //handle show the lending add form
 
+    const navigate = useNavigate();
+
     //add useEffect to load data
     useEffect(() => {
         const loadData = async () => {
+            try{
             const lendingDetails = await GetLendings()
-            console.log(lendingDetails)
             setLendingData(lendingDetails)
+            } catch (error) {
+                navigate('/unauth')
+                console.error("Failed to fetch lendings", error)
+            }
         }
         loadData();
-    }, [])
+    }, [navigate])
 
     const tHeads: string[] = [
         "Lending ID",

@@ -6,6 +6,7 @@ import AddBook from './AddBook';
 import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../../service/BookData';
 import { useLocation } from 'react-router';
 import styles from './bookstyle.module.css'
+import { useNavigate } from 'react-router';
 
 export function BookConsole() {
 
@@ -26,15 +27,21 @@ export function BookConsole() {
     const [showEditBookForm, setShowEditBookForm] = useState(false) //handle show the book edit form
     const [showAddBookForm, setShowAddBookForm] = useState(false) //handle show the book add form
 
+    const navigate = useNavigate();
+
     //add useEffect to load data
     useEffect(() => {
-        const loadData = async () => {
-            const bookDetails = await GetBooks()
-            console.log(bookDetails)
-            setBookData(bookDetails)
+        const fetchBooks = async () => {
+            try {
+                const bookDetails = await GetBooks()
+                setBookData(bookDetails)
+            } catch (error) {
+                navigate('/unauth')
+                console.error("Failed to fetch books", error)
+            }
         }
-        loadData();
-    }, [])
+        fetchBooks();
+    }, [navigate])
 
     const tHeads: string[] = [
         "Book ID",

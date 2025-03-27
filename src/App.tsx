@@ -10,6 +10,7 @@ import NotFound from './components/NotFound';
 import { SignIn } from './components/auth/SignIn';
 import { SignUp } from './components/auth/SignUp';
 import { AuthProvider } from './components/auth/AuthProvider';
+import { UnAuth } from './components/UnAuth';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path='/' element={<SignIn />} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
+            <Route path='/unauth' element={<UnAuth />} />
             <Route path='/book' element={<BookConsole />} />
             <Route path='/member' element={<MemberConsole />} />
             <Route path='/staff' element={<StaffConsole />} />

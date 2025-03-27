@@ -1,9 +1,17 @@
 import React from 'react';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
+import { useAuth } from './auth/AuthProvider';
 
-const NotFound = () => {
+export const UnAuth = () => {
+
+    const { logout } = useAuth();
+
+    const handleOnClick = () => {
+        logout();
+    }
+
     return (
-        <Container fluid className="vh-100 bg-dark d-flex align-items-center justify-content-center">
+        <Container fluid className="vh-100 bg-dark d-flex align-items-top justify-content-center pt-5">
             <Row>
                 <Col>
                     <Alert variant="danger" className="text-center p-4 shadow-lg">
@@ -25,20 +33,17 @@ const NotFound = () => {
                                     fill="#dc3545" 
                                     viewBox="0 0 16 16"
                                 >
-                                    <path d="M8.864 14.42c-.224.274-.58.426-.96.426H3.456c-.57 0-1.08-.31-1.345-.78L.051 7.606a1.54 1.54 0 0 1 .363-1.845L7.433.123a1.567 1.567 0 0 1 2.134 0l7.02 5.638a1.54 1.54 0 0 1 .362 1.845l-1.06 2.047a.5.5 0 0 1-.448.276H9.98l.348 2.8a.5.5 0 0 1-.5.55h-1.5c-.24 0-.44-.173-.48-.412L8.14 9.792H4.51c-.24 0-.44-.173-.48-.412l-.242-1.9z"/>
+                                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
                                 </svg>
                             </div>
                         </div>
-                        <h1 className="display-4 text-danger mb-3">Page Not Found</h1>
-                        <p className="lead text-dark mb-4">
-                            Oops! The page you're looking for seems to have wandered off into the digital abyss.
+                        <h1 className="display-4 text-danger mb-3">Access Denied</h1>
+                        <p className="lead text-dark">
+                            You do not have permission to access this resource.
                         </p>
-                        <div className="mt-4 d-flex justify-content-center gap-3">
-                            <Alert.Link href="/" className="btn btn-danger">
+                        <div className="mt-4">
+                            <Alert.Link href="/" className="btn btn-danger" onClick={handleOnClick}>
                                 Return to Home
-                            </Alert.Link>
-                            <Alert.Link href="#" onClick={() => window.history.back()} className="btn btn-outline-danger">
-                                Go Back
                             </Alert.Link>
                         </div>
                     </Alert>
@@ -47,5 +52,3 @@ const NotFound = () => {
         </Container>
     );
 }
-
-export default NotFound;

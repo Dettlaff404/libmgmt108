@@ -6,6 +6,7 @@ import AddStaff from './AddStaff';
 import { AddStaffData, DeleteStaff, GetStaffs, UpdateStaff } from '../../service/StaffData';
 import { useLocation } from 'react-router';
 import styles from './staffstyle.module.css'
+import { useNavigate } from 'react-router';
 
 export function StaffConsole() {
 
@@ -25,15 +26,21 @@ export function StaffConsole() {
     const [showEditStaffForm, setShowEditStaffForm] = useState(false) //handle show the staff edit form
     const [showAddStaffForm, setShowAddStaffForm] = useState(false) //handle show the staff add form
 
+    const navigate = useNavigate();
+
     //add useEffect to load data
     useEffect(() => {
         const loadData = async () => {
-            const staffDetails = await GetStaffs()
-            console.log(staffDetails)
-            setStaffData(staffDetails)
+            try {
+                const staffDetails = await GetStaffs()
+                setStaffData(staffDetails) 
+            } catch (error) {
+                navigate('/unauth')
+                console.error("Failed to fetch staffs", error)
+            }
         }
         loadData();
-    }, [])
+    }, [navigate])
 
     const tHeads: string [] = [
         "Staff Id",
