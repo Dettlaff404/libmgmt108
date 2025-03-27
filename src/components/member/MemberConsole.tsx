@@ -7,6 +7,7 @@ import { AddMemberData, DeleteMember, GetMembers, UpdateMember } from '../../ser
 import { useLocation } from 'react-router';
 import styles from './memberstyle.module.css'
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 export function MemberConsole() {
 
@@ -66,11 +67,24 @@ export function MemberConsole() {
 
     //handle delete function
     const handleDelete = async (memberId: string) => {
-        try {
-            await DeleteMember(memberId);
-            setMemberData(memberData.filter((member) => member.memberId !== memberId));
-        } catch (error) {
-            console.error("Failed to delete member", error)
+        //impl custom delete alert
+        const result = await Swal.fire({
+            title: 'Are you sure to delete this record?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await DeleteMember(memberId);
+                setMemberData(memberData.filter((member) => member.memberId !== memberId));
+            } catch (error) {
+                console.error("Failed to delete member", error)
+            }
         }
     }
 

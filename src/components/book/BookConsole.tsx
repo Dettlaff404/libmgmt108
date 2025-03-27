@@ -7,6 +7,8 @@ import { AddBookData, UpdateBook, GetBooks, DeleteBook } from '../../service/Boo
 import { useLocation } from 'react-router';
 import styles from './bookstyle.module.css'
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
+
 
 export function BookConsole() {
 
@@ -78,11 +80,24 @@ export function BookConsole() {
 
     //handle delete function
     const handleDelete = async (bookId: string) => {
-        try {
-            await DeleteBook(bookId);
-            setBookData(bookData.filter((book) => book.bookId !== bookId));
-        } catch (error) {
-            console.error("Failed to delete book", error)
+        //impl custom delete alert
+        const result = await Swal.fire({
+            title: 'Are you sure to delete this record?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await DeleteBook(bookId);
+                setBookData(bookData.filter((book) => book.bookId !== bookId));
+            } catch (error) {
+                console.error("Failed to delete book", error)
+            }
         }
     }
 

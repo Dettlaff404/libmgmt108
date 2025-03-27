@@ -7,6 +7,7 @@ import { AddStaffData, DeleteStaff, GetStaffs, UpdateStaff } from '../../service
 import { useLocation } from 'react-router';
 import styles from './staffstyle.module.css'
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 export function StaffConsole() {
 
@@ -33,7 +34,7 @@ export function StaffConsole() {
         const loadData = async () => {
             try {
                 const staffDetails = await GetStaffs()
-                setStaffData(staffDetails) 
+                setStaffData(staffDetails)
             } catch (error) {
                 navigate('/unauth')
                 console.error("Failed to fetch staffs", error)
@@ -42,7 +43,7 @@ export function StaffConsole() {
         loadData();
     }, [navigate])
 
-    const tHeads: string [] = [
+    const tHeads: string[] = [
         "Staff Id",
         "First Name",
         "Last Name",
@@ -75,11 +76,24 @@ export function StaffConsole() {
 
     //handle delete function
     const handleDelete = async (staffId: string) => {
-        try {
-            await DeleteStaff(staffId);
-            setStaffData(staffData.filter((staff) => staff.staffId !== staffId));
-        } catch (error) {
-            console.error("Failed to delete staff member", error)
+        //impl custom delete alert
+        const result = await Swal.fire({
+            title: 'Are you sure to delete this record?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await DeleteStaff(staffId);
+                setStaffData(staffData.filter((staff) => staff.staffId !== staffId));
+            } catch (error) {
+                console.error("Failed to delete staff member", error)
+            }
         }
     }
 

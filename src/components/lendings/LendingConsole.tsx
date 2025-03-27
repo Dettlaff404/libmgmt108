@@ -7,6 +7,7 @@ import { AddLendingData, DeleteLending, GetLendings, UpdateLending } from '../..
 import { useLocation } from 'react-router';
 import styles from './lendingstyle.module.css'
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 export function LendingConsole() {
 
@@ -31,9 +32,9 @@ export function LendingConsole() {
     //add useEffect to load data
     useEffect(() => {
         const loadData = async () => {
-            try{
-            const lendingDetails = await GetLendings()
-            setLendingData(lendingDetails)
+            try {
+                const lendingDetails = await GetLendings()
+                setLendingData(lendingDetails)
             } catch (error) {
                 navigate('/unauth')
                 console.error("Failed to fetch lendings", error)
@@ -80,11 +81,24 @@ export function LendingConsole() {
 
     //handle delete function
     const handleDelete = async (lendingId: string) => {
-        try {
-            await DeleteLending(lendingId);
-            setLendingData(lendingData.filter((lending) => lending.lendingId !== lendingId));
-        } catch (error) {
-            console.error("Failed to delete lending", error)
+        //impl custom delete alert
+        const result = await Swal.fire({
+            title: 'Are you sure to delete this record?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await DeleteLending(lendingId);
+                setLendingData(lendingData.filter((lending) => lending.lendingId !== lendingId));
+            } catch (error) {
+                console.error("Failed to delete lending", error)
+            }
         }
     }
 
