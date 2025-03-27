@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { SignInTask } from '../../service/Auth';
 import styles from './Signformstyle.module.css'
 import { useAuth } from './AuthProvider';
+import { useNavigate } from 'react-router';
 
 export const SignIn = () => {
 
@@ -13,6 +14,7 @@ export const SignIn = () => {
     }
 
     const { login } = useAuth();
+    const navigate = useNavigate();
 
     const [user, setUser] = useState<SignIn>(
         {
@@ -39,6 +41,8 @@ export const SignIn = () => {
                 password: ""
             }
         )
+        //navigate to /book
+        navigate('/book');
     }
 
     return (

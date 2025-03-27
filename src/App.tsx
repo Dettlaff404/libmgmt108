@@ -18,7 +18,7 @@ function App() {
         <AuthProvider>
           <NavB />
           <Routes>
-            <Route path='/' element={<BookConsole />} />
+            <Route path='/' element={<SignIn />} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/book' element={<BookConsole />} />
