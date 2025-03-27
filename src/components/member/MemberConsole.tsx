@@ -58,11 +58,17 @@ export function MemberConsole() {
         setShowEditMemberForm(false);
     }
 
-    const handleUpdate = (updatedMember: Member) => {
+    const handleUpdate = async (updatedMember: Member) => {
         const updatedMembers = memberData.map((member) =>
             member.memberId === updatedMember.memberId ? updatedMember : member
         );
         setMemberData(updatedMembers);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Member details updated successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     };
 
     //handle delete function

@@ -67,11 +67,17 @@ export function StaffConsole() {
         setShowEditStaffForm(false);
     }
 
-    const handleUpdate = (updatedStaff: Staff) => {
+    const handleUpdate = async (updatedStaff: Staff) => {
         const updatedStaffs = staffData.map((staff) =>
             staff.staffId === updatedStaff.staffId ? updatedStaff : staff
         );
         setStaffData(updatedStaffs);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Staff details updated successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     };
 
     //handle delete function

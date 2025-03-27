@@ -71,11 +71,17 @@ export function BookConsole() {
         setShowEditBookForm(false);
     }
 
-    const handleUpdate = (updatedBook: Book) => {
+    const handleUpdate = async (updatedBook: Book) => {
         const updatedBooks = bookData.map((book) =>
             book.bookId === updatedBook.bookId ? updatedBook : book
         );
         setBookData(updatedBooks);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Book details updated successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     };
 
     //handle delete function

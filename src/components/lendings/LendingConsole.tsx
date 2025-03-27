@@ -66,7 +66,7 @@ export function LendingConsole() {
         setShowEditLendingForm(false);
     }
 
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
         // const updatedLendings = lendingData.map((lending) =>
         //     lending.lendingId === updatedLending.lendingId ? updatedLending : lending
         // );
@@ -77,6 +77,12 @@ export function LendingConsole() {
             setLendingData(lendingDetails)
         }
         loadData();
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Handed over successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     };
 
     //handle delete function
