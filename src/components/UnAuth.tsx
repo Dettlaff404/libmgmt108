@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 import { useAuth } from './auth/AuthProvider';
+import Swal from 'sweetalert2';
 
 export const UnAuth = () => {
+
+    useEffect(() => {
+        Swal.fire({
+            title: 'Access Denied!',
+            text: 'You are not authorized to access this page. Please login to continue.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false
+        })
+    }, [])
 
     const { logout } = useAuth();
 
@@ -11,7 +22,7 @@ export const UnAuth = () => {
     }
 
     return (
-        <Container fluid className="vh-100 bg-dark d-flex align-items-top justify-content-center pt-5">
+        <Container fluid className="vh-100 bg-dark d-flex align-items-center justify-content-center">
             <Row>
                 <Col>
                     <Alert variant="danger" className="text-center p-4 shadow-lg">
