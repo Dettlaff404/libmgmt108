@@ -31,7 +31,12 @@ const DeleteBook = async(bookId: string) => {
     //update the book
     try {
         const response = await axios.delete(
-            `${baseURL}?bookIdKey=${bookId}`
+            `${baseURL}?bookIdKey=${bookId}`,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
         );
         return response.data
     } catch (error) {
@@ -62,7 +67,12 @@ const UpdateBook = async(book: any) => {
     try {
         const response = await axios.patch(
             `${baseURL}?bookId=${book.bookId}`,
-            book
+            book,
+            {
+                headers: {
+                    Authorization: fetchToken()
+                }
+            }
         );
         return response.data
     } catch (error) {
