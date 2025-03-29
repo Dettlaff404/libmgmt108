@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8085/booklib/api/v1/books"
+const baseURL = "http://localhost:3700/api/v1/books"
 
 
 const fetchToken = () => {
@@ -48,7 +48,7 @@ const DeleteBook = async(bookId: string) => {
 const GetBooks = async() => {
     //get the books
     try {
-        const response = await axios.get(`${baseURL}/getallbooks`,
+        const response = await axios.get(`${baseURL}`,
             {
                 headers: {
                     Authorization: fetchToken()
