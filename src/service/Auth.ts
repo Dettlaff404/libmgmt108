@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseAuthURL = "http://localhost:8085/booklib/api/v1/auth";
+const baseAuthURL = "http://localhost:3700/api/v1/auth";
 
 const SignUpTask = async (signUp: any) => {
     console.log(signUp)
