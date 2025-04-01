@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8085/booklib/api/v1/staff"
+const baseURL = "http://localhost:3700/api/v1/staff"
 
 const fetchToken = () => {
     const token = localStorage.getItem("libToken")
@@ -9,6 +9,7 @@ const fetchToken = () => {
 
 const AddStaffData = async(staff: any) => {
     //add the staff member
+    delete staff.staffId;
     try {
         const response = await axios.post(
             baseURL,
@@ -31,7 +32,7 @@ const DeleteStaff = async(staffId: string) => {
     //delete the staff member
     try {
         const response = await axios.delete(
-            `${baseURL}?staffId=${staffId}`,
+            `${baseURL}/${staffId}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -48,7 +49,7 @@ const DeleteStaff = async(staffId: string) => {
 const GetStaffs = async() => {
     //get the books
     try {
-        const response = await axios.get(`${baseURL}/getallstaff`,
+        const response = await axios.get(`${baseURL}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -66,7 +67,7 @@ const UpdateStaff = async(staff: any) => {
     //update the book
     try {
         const response = await axios.patch(
-            `${baseURL}?staffId=${staff.staffId}`,
+            `${baseURL}/${staff.staffId}`,
             staff,
             {
                 headers: {
