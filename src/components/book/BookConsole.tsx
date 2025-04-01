@@ -107,8 +107,14 @@ export function BookConsole() {
         }
     }
 
-    const handleAdd = (newBook: Book) => {
+    const handleAdd = async(newBook: Book) => {
         setBookData((prevData) => [...prevData, newBook]);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Book details added successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     }
 
     const location = useLocation();

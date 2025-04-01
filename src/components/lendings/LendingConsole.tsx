@@ -108,8 +108,14 @@ export function LendingConsole() {
         }
     }
 
-    const handleAdd = (newLending: Lending) => {
+    const handleAdd = async (newLending: Lending) => {
         setLendingData((prevData) => [...prevData, newLending]);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Lending added successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     }
 
     const location = useLocation();

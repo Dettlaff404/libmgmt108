@@ -94,8 +94,14 @@ export function MemberConsole() {
         }
     }
 
-    const handleAdd = (newMember: Member) => {
+    const handleAdd = async (newMember: Member) => {
         setMemberData((prevData) => [...prevData, newMember]);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Member details added successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     }
 
     const location = useLocation();

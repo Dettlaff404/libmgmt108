@@ -103,8 +103,14 @@ export function StaffConsole() {
         }
     }
 
-    const handleAdd = (newStaff: Staff) => {
+    const handleAdd = async(newStaff: Staff) => {
         setStaffData((prevData) => [...prevData, newStaff]);
+        await Swal.fire({
+            title: 'Success!',
+            text: 'Staff details added successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     }
 
     //get location of current route
