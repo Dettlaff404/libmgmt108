@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8085/booklib/api/v1/members"
+const baseURL = "http://localhost:3700/api/v1/members"
 
 const fetchToken = () => {
     const token = localStorage.getItem("libToken")
@@ -8,7 +8,9 @@ const fetchToken = () => {
 }
 
 const AddMemberData = async(member: any) => {
+    console.log(member)
     //update the book
+    delete member.memberId;
     try {
         const response = await axios.post(
             baseURL,
@@ -31,7 +33,7 @@ const DeleteMember = async(memberId: string) => {
     //update the book
     try {
         const response = await axios.delete(
-            `${baseURL}?memberId=${memberId}`,
+            `${baseURL}/${memberId}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -48,7 +50,7 @@ const DeleteMember = async(memberId: string) => {
 const GetMembers = async() => {
     //get the books
     try {
-        const response = await axios.get(`${baseURL}/getallmembers`,
+        const response = await axios.get(`${baseURL}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -66,7 +68,7 @@ const UpdateMember = async(member: any) => {
     //update the book
     try {
         const response = await axios.patch(
-            `${baseURL}?memberId=${member.memberId}`,
+            `${baseURL}/${member.memberId}`,
             member,
             {
                 headers: {

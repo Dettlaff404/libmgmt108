@@ -10,6 +10,7 @@ const fetchToken = () => {
 
 const AddBookData = async(book: any) => {
     //update the book
+    delete book.bookId;
     try {
         const response = await axios.post(
             baseURL,
@@ -31,7 +32,7 @@ const DeleteBook = async(bookId: string) => {
     //update the book
     try {
         const response = await axios.delete(
-            `${baseURL}?bookIdKey=${bookId}`,
+            `${baseURL}/${bookId}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -66,7 +67,7 @@ const UpdateBook = async(book: any) => {
     //update the book
     try {
         const response = await axios.patch(
-            `${baseURL}?bookId=${book.bookId}`,
+            `${baseURL}/${book.bookId}`,
             book,
             {
                 headers: {
