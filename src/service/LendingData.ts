@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8085/booklib/api/v1/lendings"
+const baseURL = "http://localhost:3700/api/v1/lendings"
 
 const fetchToken = () => {
     const token = localStorage.getItem("libToken")
@@ -9,6 +9,13 @@ const fetchToken = () => {
 
 const AddLendingData = async(lending: any) => {
     //add the lending
+    console.log(lending);
+    delete lending.lendingId;
+    delete lending.isActiveLending;
+    delete lending.overDueDays;
+    delete lending.returnDate;
+    delete lending.fineAmount;
+    delete lending.lendingDate;
     try {
         const response = await axios.post(
             baseURL,
@@ -31,7 +38,7 @@ const DeleteLending = async(lendingId: string) => {
     //delete the lending
     try {
         const response = await axios.delete(
-            `${baseURL}?lendingId=${lendingId}`,
+            `${baseURL}/${lendingId}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -48,7 +55,7 @@ const DeleteLending = async(lendingId: string) => {
 const GetLendings = async() => {
     //get the lendings
     try {
-        const response = await axios.get(`${baseURL}/getalllendings`,
+        const response = await axios.get(`${baseURL}`,
             {
                 headers: {
                     Authorization: fetchToken()
@@ -66,7 +73,7 @@ const UpdateLending = async(lending: any) => {
     //update the book
     try {
         const response = await axios.patch(
-            `${baseURL}?lendingId=${lending.lendingId}`,
+            `${baseURL}/${lending.lendingId}`,
             lending,
             {
                 headers: {
@@ -76,7 +83,7 @@ const UpdateLending = async(lending: any) => {
         );
         return response.data
     } catch (error) {
-        console.error("Failed to Update book", error)
+        console.error("Failed to Update Lending", error)
         throw error   
     }
 }
